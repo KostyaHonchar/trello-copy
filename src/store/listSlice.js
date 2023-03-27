@@ -1,30 +1,31 @@
-import {createSlice} from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
+import { v4 as uuid } from "uuid";
+
 
 const listSlice = createSlice({
   name: "listSlice",
   initialState: {
     list: [
       {
-        title: "Test List",
-        id: "test id ",
+        id: uuid(),
+        title: "Test List1",
         children: [
           {
-            id: "test card id",
+            id: uuid(),
             title: "test card",
-            parentId: "test id ",
           },
           {
-            id: "test card id2",
+            id: uuid(),
             title: "test card2",
-            parentId: "test id ",
           },
         ],
       },
+      
     ],
   },
   reducers: {
     addList: (state, action) => {
-      state.list = [...state.list,action.payload];
+      state.list = [...state.list, action.payload];
     },
     addCard: (state, action) => {
       state.list.forEach((item) => {
@@ -38,8 +39,22 @@ const listSlice = createSlice({
         }
       });
     },
+    deleteCardFromParentList: (state, action) => {
+      const {payload} = action;
+      // console.log(action,'3 дія')
+      const chosenList = state.list.filter(
+        (list) => list.id === payload.parentId
+      );
+      // const newList = chosenList[0].children.filter(
+      //   (card) => card.id !== payload.id
+      // );
+
+      // chosenList[0].children = [...newList];
+    },
     addCardToChosenList: (state, action) => {
-      const chosenList = state.list.filter((list) => list.id === action.payload.id);
+      const chosenList = state.list.filter(
+        (list) => list.id === action.payload.id
+      );
       state.list = [...state.list, chosenList];
     },
     // editCard: (state, action) => {
@@ -64,6 +79,6 @@ const listSlice = createSlice({
   },
 });
 
-export const {addList, addCard, addCardToChosenList} =
+export const {addList, addCard, addCardToChosenList, deleteCardFromParentList} =
   listSlice.actions;
 export default listSlice.reducer;
