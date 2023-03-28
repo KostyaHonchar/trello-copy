@@ -10,18 +10,16 @@ const TrelloLists = () => {
    const dispatch = useDispatch();
    const [isFormVisible, setIsFormVisible] = useState(false);
    const [inputVal, setInputVal] = useState("");
- 
+
    const submitHandler = (e) => {
       e.preventDefault()
       const title = e.target.inputListId.value;
-      
-      console.log(title)
       dispatch(getList({ title }));
       setIsFormVisible(false);
       setInputVal('');
    };
 
-   
+
    return (
       <div className='lists' >
          {listItem.map((list) => (
@@ -31,7 +29,7 @@ const TrelloLists = () => {
          ))}
          <div >
             <div className='add-new-item '>
-               <button onClick={() =>setIsFormVisible(true)}>+ Add list</button>
+               <button onClick={() => setIsFormVisible(true)}>+ Add list</button>
                {isFormVisible &&
                   <form onSubmit={submitHandler}>
                      <input value={inputVal} name='inputListId' onChange={(e) => setInputVal(e.target.value)} />

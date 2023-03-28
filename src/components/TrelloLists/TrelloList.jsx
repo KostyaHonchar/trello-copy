@@ -1,9 +1,11 @@
 import React, { useState } from "react";
-import { deleteCardFromParentList } from "../../store/listSlice";
 import { useDispatch } from "react-redux";
 import { useDrop } from "react-dnd";
 import TrelloCard from "../TrelloCard/TrelloCard";
 import { getCard } from "../../store/listSlice.reducer";
+import { getDeleteAllCards } from "../../store/listSlice.reducer";
+import { dragAndDrop } from "../../store/listSlice.reducer";
+import DeleteIcon from '@mui/icons-material/Delete';
 
 
 const TrelloList = ({ list, listItem, id }) => {
@@ -13,13 +15,17 @@ const TrelloList = ({ list, listItem, id }) => {
 
    const [{ isOver }, drop] = useDrop(() => ({
       accept: 'card',
-      drop: (item) => addCardToList(item),
+      drop: (item, monitor) => {
+         
+         addCardToList(item, monitor)
+      },
       collect: (monitor) => {
          return ({
             isOver: monitor.isOver(),
          })
       },
    }));
+   
    const submitHandler = (e) => {
       e.preventDefault()
       const title = e.target.inputCardId.value;
@@ -27,16 +33,21 @@ const TrelloList = ({ list, listItem, id }) => {
       setIsFormVisible(false);
       setInputVal('');
    };
-   const addCardToList = (item) => {
-      console.log(item, '1 дія')
-      const listOfCards = listItem.filter((card) => item.id === card.id)
-      // отримуємо пустий масив
-      // хоч і приходить обєкт у функцію
-      console.log(listOfCards, '2 дія')
-      dispatch(deleteCardFromParentList({
-         ...item.card,
-      }));
+
+   const deleteCards = () => {
+      const listId = list.id;
+      dispatch(getDeleteAllCards({ listId }))
    }
+
+   const addCardToList = (item,monitor) => {
+      // console.log(item, '1 дія')
+      console.log(monitor, '1 дія')
+      
+      dispatch(dragAndDrop({ listId: list.id, cardId: item.id }));
+      // отримуємо пустий масив
+      // хоч і приходить id у обєкті у функцію
+   }
+
 
    return (
       <>
@@ -44,6 +55,7 @@ const TrelloList = ({ list, listItem, id }) => {
             <div className="list-element">
                <div>
                   {list.title}
+                  <button onClick={deleteCards}><DeleteIcon fontSize="small" /></button>
                   {list?.children?.length > 0 && list.children.map((children) =>
                      <TrelloCard
                         key={children.id}
