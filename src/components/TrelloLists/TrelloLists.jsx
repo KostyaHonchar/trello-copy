@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import "./allList.css"
 import { useSelector } from 'react-redux';
 import TrelloList from './TrelloList';
 import { useDispatch } from 'react-redux';
@@ -28,8 +29,8 @@ const TrelloLists = () => {
             </div>
          ))}
          <div >
-            <div className='add-new-item '>
-               <button onClick={() => setIsFormVisible(true)}>+ Add list</button>
+            <div className='add-new-list'>
+               <button onClick={() => setIsFormVisible(true)} >+ Add list</button>
                {isFormVisible &&
                   <form onSubmit={submitHandler}>
                      <input value={inputVal} name='inputListId' onChange={(e) => setInputVal(e.target.value)} />

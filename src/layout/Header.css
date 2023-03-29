@@ -1,0 +1,45 @@
+/* Logo */
+.logo-orange {
+   color: #C9ADA7;
+   font-size: 3rem; 
+   padding-left: 40px;
+}
+.logo-white {
+   font-size: 3rem; 
+   color: #FFF9FF;
+}
+
+
+/* Header and stuff */
+.header {
+   display: flex;
+   flex-wrap: wrap; 
+   align-items: center;
+   padding:1.2rem;
+   justify-content: space-between;
+   background-color: #22223B;
+   margin-bottom: 1rem;
+}
+.header ul a {
+   font-weight: 600;
+   background: #fff;
+   color: #4A4E69;
+   font-size: 1.5rem; 
+   text-decoration: none;
+   transition: box-shadow .2s;
+   outline: none;
+   padding: 6px 12px;
+   border-radius: 6px;
+   margin-right: 1rem;
+   text-decoration: none;
+}
+.header-links ul {
+   display: flex;
+   flex-wrap: wrap; 
+   align-items: center;
+   list-style-type: none;
+   margin-right: 1rem;
+}
+.header-logo a {
+   text-decoration: none;
+}

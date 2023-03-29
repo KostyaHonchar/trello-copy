@@ -1,0 +1,16 @@
+.list-item p {
+   margin: 6px 0px;
+}
+
+.date-edit {
+   padding-top: 15px;
+   color: gray;
+   font-size: 12px;
+}
+
+.list-item {
+   background-color: #f4f5f7;
+   border-radius: 8px;
+   margin: 7px 0px;
+   max-width: 10rem;
+}

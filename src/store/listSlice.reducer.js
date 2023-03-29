@@ -2,22 +2,7 @@ import {v4 as uuid} from "uuid";
 import {createAsyncThunk, createSlice, createAction} from "@reduxjs/toolkit";
 
 const initialState = {
-  list: [
-    {
-      id: uuid(),
-      title: "Test List1",
-      children: [
-        {
-          id: uuid(),
-          title: "test card",
-        },
-        {
-          id: uuid(),
-          title: "test card2",
-        },
-      ],
-    },
-  ],
+  list: [],
 };
 
 export const getList = createAsyncThunk(
@@ -58,16 +43,41 @@ export const getEditCard = createAsyncThunk(
 
 export const getDeleteAllCards = createAction("listSlice/getDeleteAllCards");
 
-export const dragAndDrop = createAsyncThunk("listSlice/dragAndDrop", ({listId,cardId}) => {
-  const data = {listId, cardId};
-  console.log(listId,'listId in action ');
-  console.log(cardId,'cardId in action ');
-  return data;
-});
+export const dragAndDrop = createAsyncThunk(
+  "listSlice/dragAndDrop",
+  ({parentId, cardId, droppedId}, {dispatch}) => {
+    const data = {parentId, cardId, droppedId};
+    dispatch(addCardToList({parentId, cardId, droppedId}));
+    dispatch(deleteCard({parentId, cardId}));
+    return data;
+  }
+);
 
 export const listSlicer = createSlice({
   name: "listSlice",
   initialState,
+  reducers: {
+    deleteCard: (state, {payload}) => {
+      const chosenList = state.list.find(
+        (list) => list.id === payload.parentId
+      );
+      const newList = chosenList.children.filter(
+        (card) => card.id !== payload.cardId
+      );
+      chosenList.children = [...newList];
+    },
+    addCardToList: (state, {payload}) => {
+      const chosenList = state.list.find(
+        (list) => list.id === payload.droppedId
+      );
+      const oldList = state.list.find((list) => list.id === payload.parentId);
+      const chosenCard = oldList.children.find(
+        (card) => card.id === payload.cardId
+      );
+
+      chosenList.children = [...chosenList.children, chosenCard];
+    },
+  },
   extraReducers: {
     [getList.fulfilled]: (state, {payload}) => {
       state.list = [...state.list, payload];
@@ -95,7 +105,10 @@ export const listSlicer = createSlice({
       const list = state.list.find((list) => list.id === listId);
       list.children = [];
     },
+    [dragAndDrop]: (state, {payload}) => {},
   },
 });
+
+export const {deleteCard, addCardToList} = listSlicer.actions;
 
 export default listSlicer.reducer;

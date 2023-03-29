@@ -1,5 +1,5 @@
 import React from 'react'
-import '../App.css'
+import './Home.css'
 import Header from '../layout/Header'
 
 function Home() {
@@ -10,11 +10,11 @@ function Home() {
             <h1>Hello, welcome to a <a
                className='greets'
                href='https://trello.com/' target={'_blank'}>
-               Trello</a> clone built with React/JS</h1>
-            <ul>
+               Trello</a> clone built with React/JS and Redux Toolkit</h1>
+            <ul className='home-list'>
+               <li>This project has been developed with the aim of studying and praciting web development, I found that idea to copy "Trello" very intresting, the source code can be found here</li>
                <li>Go to the "Your board" to view it and start managing your tasks</li>
                <li>In your board you can create as many cards as you want to help you manage your project tasks</li>
-               <li>This project has been developed with the aim of studying and praciting web development, interfaces building and styling, the source code can be found here</li>
             </ul>
          </div>
       </div>

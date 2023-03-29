@@ -1,0 +1,21 @@
+.home {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   height: auto;
+   padding: 1rem 1.5rem;
+   font-size: 20px;
+   margin-top: 45px;
+}
+.greets {
+   color: #4A4E69;
+}
+
+.home-list {
+   margin-top: 3rem;
+   padding: 20px;
+}
+
+.home-list li {
+   padding: 8px;
+}

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import "./allList.css"
 import { useDrop } from "react-dnd";
 import TrelloCard from "../TrelloCard/TrelloCard";
 import { getCard } from "../../store/listSlice.reducer";
@@ -15,10 +16,7 @@ const TrelloList = ({ list, listItem, id }) => {
 
    const [{ isOver }, drop] = useDrop(() => ({
       accept: 'card',
-      drop: (item, monitor) => {
-         
-         addCardToList(item, monitor)
-      },
+      drop: (item) => addCardToList(item),
       collect: (monitor) => {
          return ({
             isOver: monitor.isOver(),
@@ -33,19 +31,13 @@ const TrelloList = ({ list, listItem, id }) => {
       setIsFormVisible(false);
       setInputVal('');
    };
-
    const deleteCards = () => {
       const listId = list.id;
       dispatch(getDeleteAllCards({ listId }))
    }
 
-   const addCardToList = (item,monitor) => {
-      // console.log(item, '1 дія')
-      console.log(monitor, '1 дія')
-      
-      dispatch(dragAndDrop({ listId: list.id, cardId: item.id }));
-      // отримуємо пустий масив
-      // хоч і приходить id у обєкті у функцію
+   const addCardToList = (item) => {      
+      dispatch(dragAndDrop({ parentId: item.parentId, cardId: item.id, droppedId:id }));
    }
 
 
@@ -55,12 +47,15 @@ const TrelloList = ({ list, listItem, id }) => {
             <div className="list-element">
                <div>
                   {list.title}
-                  <button onClick={deleteCards}><DeleteIcon fontSize="small" /></button>
+                  <button onClick={deleteCards}>
+                     <DeleteIcon fontSize="small" />
+                  </button>
                   {list?.children?.length > 0 && list.children.map((children) =>
                      <TrelloCard
                         key={children.id}
                         cardText={children}
                         id={children.id}
+                        parentId={id}
                      />
                   )}
                   <div>

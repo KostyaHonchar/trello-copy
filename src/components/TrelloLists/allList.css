@@ -1,0 +1,34 @@
+.list-element {
+   margin: 6px 10px;
+   font-size: 1.6rem;
+   background-color: #9A8C98;
+   border-radius: 5px;
+   padding: 10px;
+   max-width: 16rem;
+   overflow: hidden;
+   text-overflow: ellipsis;
+}
+
+.add-new-list {
+   margin: 7px 20px;
+}
+
+.lists {
+   display: flex;
+   flex-direction: row;
+   flex-wrap: wrap;
+   justify-content: left;
+}
+
+@media (max-width: 768px) {
+   .lists {
+      flex-direction: row;
+      align-items: left;
+   }
+}
+
+input  {
+   border-color: gray;
+   width: 120px;
+   border-radius: 4px;
+}
