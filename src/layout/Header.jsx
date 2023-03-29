@@ -15,7 +15,7 @@ function Header() {
             <ul>
                <li><Link to="/home">Home</Link></li>
                <li><Link to="/">Your Board</Link></li>
-               <li><a>Source Code</a></li>
+               <li><a href='https://github.com/KostyaHonchar/trello-copy/tree/master' target='_blank'>Source Code</a></li>
             </ul>
          </div>
       </header>

@@ -2,7 +2,22 @@ import {v4 as uuid} from "uuid";
 import {createAsyncThunk, createSlice, createAction} from "@reduxjs/toolkit";
 
 const initialState = {
-  list: [],
+  list: [
+    {
+      id: uuid(),
+      title: "Personal",
+      children: [
+        {
+          id: uuid(),
+          title: "Clean my room",
+        },
+        {
+          id: uuid(),
+          title: "Buy some candy",
+        },
+      ],
+    },
+  ],
 };
 
 export const getList = createAsyncThunk(
